@@ -61,6 +61,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version:  16.x
+      - name: list the directory contents
+        run: ls -lart
       - name: Install dependencies
         run: npm ci
       - name: Rebuild the index.js file
