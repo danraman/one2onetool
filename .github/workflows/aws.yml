@@ -56,17 +56,13 @@ jobs:
   preperation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
       - name: configure node.js for compiling
         uses: actions/setup-node@v1
         with:
           node-version:  16.x
       - name: list the directory contents
         run: ls -lart
-  softwareBuild:
-    needs: preperation
-    runs-on: ubuntu-latest
-    steps:  
       - name: Install dependencies
         run: npm ci
       - name: Rebuild the index.js file
