@@ -9,6 +9,7 @@ RUN apt-get update && apt-get upgrade -y && \
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm ci
 RUN npm install --production
+RUN npm audit --force
 COPY . .
 EXPOSE 3000
 CMD [ "npm", "run","start" ]
