@@ -64,7 +64,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Rebuild the index.js file
-        run: npm run build
+        run: npm run start
         
       
   deploy:
