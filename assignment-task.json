@@ -1,4 +1,4 @@
-name: 'Amazon ECS "Deploy Task Definition" Action for GitHub Actions'
+name: 'Amazon ECS Deploy Task Definition Action for GitHub Actions'
 description: 'Registers an Amazon ECS task definition, and deploys it to an ECS service'
 branding:
   icon: 'cloud'
