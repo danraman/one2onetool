@@ -144,6 +144,7 @@ jobs:
          cluster: ${{ env.ECS_CLUSTER }}
          wait-for-service-stability: true
      - name: Send some mail
+       if: always()
        uses: wadeww/send-email-action@master
        with:
          server_address: smtp.gmail.com
