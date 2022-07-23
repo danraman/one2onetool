@@ -64,7 +64,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/aws-ec2-task:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/aws-ec2-task:latest",
   "family": "aws-ec2-task",
   "requiresAttributes": [
     {
