@@ -82,6 +82,19 @@ jobs:
 
      - name: Perform CodeQL Analysis
        uses: github/codeql-action/analyze@v1
+       
+     - name: Send some mail
+       if: failure()
+       uses: wadeww/send-email-action@master
+       with:
+         server_address: smtp.gmail.com
+         port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: software build workflow completed with status ${{job.status}}
+         body: Job completed ${{job.status}}
+         to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
+         from: Git hub actions
  
  softwarebuild:
    needs: codeQualityCheck
@@ -151,7 +164,7 @@ jobs:
          port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
-         subject: Workflow finished
+         subject: software build workflow completed with status ${{job.status}}
          body: Job completed ${{job.status}}
          to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
          from: Git hub actions
