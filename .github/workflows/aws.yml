@@ -83,7 +83,7 @@ jobs:
      - name: Perform CodeQL Analysis
        uses: github/codeql-action/analyze@v1
        
-     - name: Send some mail
+     - name: Send mail
        if: failure()
        uses: wadeww/send-email-action@master
        with:
@@ -156,7 +156,7 @@ jobs:
          service: ${{ env.ECS_SERVICE }}
          cluster: ${{ env.ECS_CLUSTER }}
          wait-for-service-stability: true
-     - name: Send some mail
+     - name: Send mail
        if: always()
        uses: wadeww/send-email-action@master
        with:
