@@ -48,6 +48,14 @@ permissions:
 jobs:
  codeQualityCheck:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false      
+      matrix:
+        language: [ 'javascript' ]
     steps:
      - name: check out the code
        uses: actions/checkout@v3
@@ -70,6 +78,7 @@ jobs:
        uses: github/codeql-action/init@v2
        with:
          queries: +security-extended
+         languages: ${{ matrix.language }}
 
      - name: Perform CodeQL Analysis
        uses: github/codeql-action/analyze@v1
