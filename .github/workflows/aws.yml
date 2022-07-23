@@ -143,3 +143,14 @@ jobs:
          service: ${{ env.ECS_SERVICE }}
          cluster: ${{ env.ECS_CLUSTER }}
          wait-for-service-stability: true
+     - name: Send some mail
+       uses: wadeww/send-email-action@master
+       with:
+         server_address: smtp.gmail.com
+         port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: Workflow finished
+         body: Job completed ${{job.status}}
+         to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
+         from: Git hub actions
