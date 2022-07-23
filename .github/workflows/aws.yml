@@ -49,7 +49,7 @@ jobs:
   softwarebuild:
    runs-on: ubuntu-latest
    steps:
-     - uses: actions/checkout@master
+     - uses: actions/checkout@v3
      - name: configure node.js for compiling
        uses: actions/setup-node@v1
        with:
