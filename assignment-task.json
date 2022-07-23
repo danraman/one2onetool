@@ -54,7 +54,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "aws-ecs-container"
+      "name": "assignment-container"
     }
   ],
   "placementConstraints": [],
