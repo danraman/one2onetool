@@ -5,20 +5,8 @@
     {
       "dnsSearchDomains": null,
       "environmentFiles": null,
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "secretOptions": null,
-        "options": {
-          "awslogs-group": "/ecs/assignment-task",
-          "awslogs-region": "us-east-1",
-          "awslogs-stream-prefix": "ecs"
-        }
-      },
-      "entryPoint": [
-        "npm",
-        "run",
-        "start"
-      ],
+      "logConfiguration": null,
+      "entryPoint": null,
       "portMappings": [
         {
           "hostPort": 3000,
@@ -26,22 +14,22 @@
           "containerPort": 3000
         }
       ],
-      "command": [],
+      "command": null,
       "linuxParameters": null,
-      "cpu": 1,
+      "cpu": 0,
       "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
       "mountPoints": [],
-      "workingDirectory": "/app",
+      "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
+      "image": "061268931248.dkr.ecr.us-east-1.amazonaws.com/assignment21jul:0195a5b7b63c4c78fa64d3bca4c31117af3536a7",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -50,10 +38,10 @@
       "healthCheck": {
         "retries": 3,
         "command": [
-          "netstat -antlp 3000|grep -i listen"
+          "exit 0"
         ],
-        "timeout": 60,
-        "interval": 60,
+        "timeout": 5,
+        "interval": 30,
         "startPeriod": null
       },
       "essential": true,
@@ -66,25 +54,19 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "assignment-container"
+      "name": "ecs-container"
     }
   ],
   "placementConstraints": [],
-  "memory": "512",
+  "memory": "256",
   "taskRoleArn": "arn:aws:iam::061268931248:role/ecsTaskExecutionRole",
   "compatibilities": [
-    "EC2",
-    "FARGATE"
+    "EXTERNAL",
+    "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task:1",
-  "family": "assignment-task",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/aws-ec2-task:1",
+  "family": "aws-ec2-task",
   "requiresAttributes": [
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-    },
     {
       "targetId": null,
       "targetType": null,
@@ -95,25 +77,7 @@
       "targetId": null,
       "targetType": null,
       "value": null,
-      "name": "ecs.capability.execution-role-awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
       "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
     },
     {
       "targetId": null,
@@ -132,29 +96,14 @@
       "targetType": null,
       "value": null,
       "name": "ecs.capability.execution-role-ecr-pull"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.task-eni"
     }
   ],
   "pidMode": null,
   "requiresCompatibilities": [
-    "FARGATE"
+    "EC2"
   ],
-  "networkMode": "awsvpc",
-  "runtimePlatform": {
-    "operatingSystemFamily": "LINUX",
-    "cpuArchitecture": null
-  },
+  "networkMode": null,
+  "runtimePlatform": null,
   "cpu": "256",
   "revision": 1,
   "status": "ACTIVE",
