@@ -85,7 +85,7 @@ jobs:
        
      - name: Send mail
        if: failure()
-       uses: wadeww/send-email-action@master
+       uses: dawidd6/action-send-mail@v3
        with:
          server_address: smtp.gmail.com
          port: 465
