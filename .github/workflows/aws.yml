@@ -73,6 +73,9 @@ jobs:
        
      - name: compile the node js application
        run: npm install
+       
+     - name: re-compile index.js file
+       run: npm run build
      
      - name: Initialize CodeQL
        uses: github/codeql-action/init@v2
