@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc && ncc build && node lib/misc/generate-docs.js"
     "start": "forever -w index.js",
     "test": "jest"
   },
