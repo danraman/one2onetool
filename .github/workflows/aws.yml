@@ -88,9 +88,9 @@ jobs:
        uses: dawidd6/action-send-mail@v3
        with:
          server_address: smtp.mail.yahoo.com
-         server_port: 587
-         username: "chidu82@yahoo.com"
-         password: "ammukutty"
+         server_port: 465
+         username: chidu82@yahoo.com
+         password: ammukutty
          subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
