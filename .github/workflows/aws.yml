@@ -92,7 +92,7 @@ jobs:
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
          subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
-         body: Job completed ${{job.status}}
+         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
          from: Git hub actions
  
@@ -165,6 +165,6 @@ jobs:
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
          subject: software build workflow completed with status ${{job.status}}
-         body: Job completed ${{job.status}}
+         body: "Job completed ${{job.status}} \n ${{ toJson(job) }}"
          to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
          from: Git hub actions
