@@ -93,7 +93,7 @@ jobs:
          password: ${{secrets.MAIL_PASSWORD}}
          subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
-         to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
+         to: chidhambaram.ramanathan@gmail.com, rajarumalla@gmail.com, get.draman@gmail.com
          from: Git hub actions
  
  softwarebuild:
@@ -158,13 +158,13 @@ jobs:
          wait-for-service-stability: true
      - name: Send mail
        if: always()
-       uses: wadeww/send-email-action@master
+       uses: dawidd6/action-send-mail@v3
        with:
-         server_address: smtp.gmail.com
-         port: 465
+         server_address: smtp.mail.yahoo.com
+         server_port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
-         subject: software build workflow completed with status ${{job.status}}
-         body: "Job completed ${{job.status}} \n ${{ toJson(job) }}"
-         to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
+         subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
+         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
+         to: chidhambaram.ramanathan@gmail.com, rajarumalla@gmail.com, get.draman@gmail.com
          from: Git hub actions
