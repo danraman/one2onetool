@@ -87,8 +87,8 @@ jobs:
        if: failure()
        uses: dawidd6/action-send-mail@v3
        with:
-         server_address: smtp.gmail.com
-         server_port: 465
+         server_address: smtp.mail.yahoo.com
+         server_port: 587
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
          subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
