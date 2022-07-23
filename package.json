@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "testing build"
     "start": "forever -w index.js",
     "test": "jest"
   },
