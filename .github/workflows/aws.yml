@@ -89,8 +89,8 @@ jobs:
        with:
          server_address: smtp.mail.yahoo.com
          server_port: 587
-         username: ${{secrets.MAIL_USERNAME}}
-         password: ${{secrets.MAIL_PASSWORD}}
+         username: "chidu82@yahoo.com"
+         password: "ammukutty"
          subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: chidhambaram.ramanathan@gmail.com, rajaarumalla@gmail.com, get.draman@gmail.com
