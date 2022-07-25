@@ -47,7 +47,7 @@ permissions:
   contents: read
 
 jobs:
- codeQualityCheck:
+ Test:
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -97,7 +97,7 @@ jobs:
          to: get.draman@gmail.com
          from: Git hub actions
  
- softwarebuild:
+ Build:
    needs: codeQualityCheck
    runs-on: ubuntu-latest
    steps:
