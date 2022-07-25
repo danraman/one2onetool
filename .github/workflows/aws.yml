@@ -167,5 +167,5 @@ jobs:
          password: ${{secrets.MAIL_PASSWORD}}
          subject: Workflow completed for ${{ github.repository }} --  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
-         to: chidhambaram.ramanathan@gmail.com, rajarumalla@gmail.com, get.draman@gmail.com
+         to: get.draman@gmail.com
          from: Git hub actions
