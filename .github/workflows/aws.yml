@@ -192,8 +192,6 @@ jobs:
         docker pull $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest"
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest" $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        sleep 60
-        aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --region us-east-1
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
      - name: Send mail
