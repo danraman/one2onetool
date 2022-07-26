@@ -68,7 +68,6 @@ jobs:
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: get.draman@gmail.com
          from: Git hub actions
-
  Build:
    needs: Test 
    runs-on: ubuntu-latest
