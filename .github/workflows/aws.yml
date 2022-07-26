@@ -36,7 +36,7 @@ jobs:
           name: preperation-artifact
           path: .
         
- codeQualityCheck:
+ test:
     needs : preparation
     runs-on: ubuntu-latest
     permissions:
@@ -51,7 +51,7 @@ jobs:
      - name: download artifacts
        uses: actions/download-artifact@master
        with:
-         name: my-artifact
+         name: preperation-artifact
          path: .
        
      - name: configure node.js for compiling
