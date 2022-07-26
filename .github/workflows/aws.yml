@@ -158,13 +158,10 @@ jobs:
      - name: Login to Amazon ECR
        id: login-ecr
        uses: aws-actions/amazon-ecr-login@v1
-
-     - name: echo github sha
-       run: echo ${{ github.sha }}
-       
+     
      - name: Scan Docker image
        id: docker-scan
-       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageDigest=${{ github.sha }}
+       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag="one2oneapp-latest"
          
      - name: total number of vulnerabilities 
        run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
