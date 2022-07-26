@@ -31,6 +31,20 @@ jobs:
         with:
           name: preperation-artifact
           path: .
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: remove previous one2oneapp-latest image for re-build
+        run: aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --image-ids imageTag="one2oneapp-latest"
       
       - name: Send mail
         if: failure()
@@ -177,7 +191,6 @@ jobs:
         # be deployed to ECS.
         docker pull $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest"
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest" $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --image-ids imageTag="one2oneapp-latest"
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
