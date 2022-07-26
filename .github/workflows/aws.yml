@@ -1,20 +1,19 @@
-name: data_file      
-on:                    
- workflow_dispatch: {} 
+name: data_file
+on:
+ workflow_dispatch: {}
  push:
     branches:
       - "release"
       - "staging"
 
 env:
-  AWS_REGION: us-east-1                    
-  ECR_REPOSITORY: assignment21jul          
-  ECS_CLUSTER: assignment-cluster          
-  ECS_SERVICE: assignment-service          
+  AWS_REGION: us-east-1                        
+  ECR_REPOSITORY: assignment21jul             
+  ECS_SERVICE: assignment-service              
+  ECS_CLUSTER: assignment-cluster             
   ECS_TASK_DEFINITION: assignment-task.json                                           
-  CONTAINER_NAME: assignment-container     
-                                           
-
+  CONTAINER_NAME: assignment-container         
+                                               
 permissions:
   contents: read
 
@@ -26,13 +25,13 @@ jobs:
       contents: read
       security-events: write
     strategy:
-      fail-fast: false  
+      fail-fast: false      
       matrix:
         language: [ 'javascript' ]
     steps:
      - name: check out the code
        uses: actions/checkout@v3
-	      
+       
      - name: configure node.js for compiling
        uses: actions/setup-node@v1
        with:
@@ -45,8 +44,8 @@ jobs:
        run: npm ci
        
      - name: compile the node js application
-       run: npm install  
- 
+       run: npm install    
+    
      - name: Initialize CodeQL
        uses: github/codeql-action/init@v2
        with:
@@ -55,7 +54,7 @@ jobs:
 
      - name: Perform CodeQL Analysis
        uses: github/codeql-action/analyze@v1
-	      
+       
      - name: Send mail
        if: failure()
        uses: dawidd6/action-send-mail@v3
@@ -64,12 +63,13 @@ jobs:
          server_port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
-         subject: Code quality has issues in ${{ github.repository }} --  ${{job.status}}
+         subject: Code quality has issues in release branch of ${{ github.repository }} --  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: get.draman@gmail.com
          from: Git hub actions
+ 
  Build:
-   needs: Test 
+   needs: Test
    runs-on: ubuntu-latest
    steps:
      - name: check out the code
@@ -95,7 +95,7 @@ jobs:
          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ env.AWS_REGION }}
-   
+
      - name: Login to Amazon ECR
        id: login-ecr
        uses: aws-actions/amazon-ecr-login@v1
@@ -104,7 +104,7 @@ jobs:
        id: build-image
        env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-         IMAGE_TAG: "master-one2oneapp-${{ github.sha }}"
+         IMAGE_TAG: "release-one2oneapp-${{ github.sha }}"
        run: |
         # Build a docker container and
         # push it to ECR so that it can
@@ -112,7 +112,6 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
      - name: Fill in the new image ID in the Amazon ECS task definition
        id: task-def
        uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -120,7 +119,7 @@ jobs:
          task-definition: ${{ env.ECS_TASK_DEFINITION }}
          container-name: ${{ env.CONTAINER_NAME }}
          image: ${{ steps.build-image.outputs.image }}
-
+ 
      - name: Deploy Amazon ECS task definition
        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
        with:
@@ -128,7 +127,6 @@ jobs:
          service: ${{ env.ECS_SERVICE }}
          cluster: ${{ env.ECS_CLUSTER }}
          wait-for-service-stability: true
-	 
      - name: Send mail
        if: always()
        uses: dawidd6/action-send-mail@v3
@@ -137,7 +135,7 @@ jobs:
          server_port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
-         subject: Workflow completed for ${{ github.repository }} --  ${{job.status}}
+         subject: Workflow completed in release branch ${{ github.repository }} -- job status is  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: get.draman@gmail.com
          from: Git hub actions
