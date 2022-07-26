@@ -161,7 +161,7 @@ jobs:
      
      - name: Scan Docker image
        id: docker-scan
-       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag="one2oneapp-latest"
+       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag="one2oneapp-latest" --region us-east-1
          
      - name: total number of vulnerabilities 
        run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
