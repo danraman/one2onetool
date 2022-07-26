@@ -173,7 +173,7 @@ jobs:
        run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
 
      - name: retag and push image to Amazon ECR with final image id. Final image id : 
-       id: retag
+       id: retag-image
        env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
          IMAGE_TAG: "release-one2oneapp-${{ github.sha }}"
@@ -221,7 +221,7 @@ jobs:
        with:
          task-definition: ${{ env.ECS_TASK_DEFINITION }}
          container-name: ${{ env.CONTAINER_NAME }}
-         image: ${{ steps.build-image.outputs.image }}
+         image: ${{ steps.retag-image.outputs.image }}
  
      - name: Deploy Amazon ECS task definition
        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
