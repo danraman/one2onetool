@@ -172,7 +172,7 @@ jobs:
      - name: total number of vulnerabilities 
        run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
 
-     - name: retag and push image to Amazon ECR with final image id. Final image id : 
+     - name: retag and push image to Amazon ECR with final image id. Final image id 
        id: retag-image
        env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
