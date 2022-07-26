@@ -31,6 +31,19 @@ jobs:
         with:
           name: preperation-artifact
           path: .
+      
+      - name: Send mail
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.mail.yahoo.com
+          server_port: 465
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: Code checkout has issues in release branch of ${{ github.repository }} --  ${{job.status}}
+          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
+          to: get.draman@gmail.com
+          from: Git hub actions
         
  test:
     needs : preparation
@@ -110,6 +123,20 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+     - name: Send mail
+       if: failure()
+       uses: dawidd6/action-send-mail@v3
+       with:
+         server_address: smtp.mail.yahoo.com
+         server_port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: Docker build has issues in release branch of ${{ github.repository }} --  ${{job.status}}
+         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
+         to: get.draman@gmail.com
+         from: Git hub actions
+     
+
  release:
    needs: build
    runs-on: ubuntu-latest
@@ -127,6 +154,20 @@ jobs:
          
      - name: total number of vulnerabilities 
        run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
+ 
+     - name: Send mail
+       if: failure()
+       uses: dawidd6/action-send-mail@v3
+       with:
+         server_address: smtp.mail.yahoo.com
+         server_port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: Image scan has failed in release stage for release branch ${{ github.repository }} --  ${{job.status}}
+         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
+         to: get.draman@gmail.com
+         from: Git hub actions
+
        
  staging_deploy:
    needs: release
