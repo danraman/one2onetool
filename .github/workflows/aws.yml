@@ -26,11 +26,6 @@ jobs:
       
       - name: list directory contents
         run: ls -lart
-      
-      - name: configure node.js for compiling
-        uses: actions/setup-node@v1
-        with:
-          node-version:  16.x
         
       - uses: actions/upload-artifact@master
         with:
@@ -55,9 +50,11 @@ jobs:
          name: preperation-artifact
          path: .      
          
-     - name: list the directory contents
-       run: ls -lart
-       
+     - name: configure node.js for compiling
+       uses: actions/setup-node@v1
+       with:
+          node-version:  16.x     
+     
      - name: Install dependencies
        run: npm ci
        
