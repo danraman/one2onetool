@@ -18,7 +18,26 @@ permissions:
   contents: read
 
 jobs:
- Test:
+ preparation:
+    runs-on: ubuntu-latest
+    permissions: 
+      actions : read
+      contents: read
+      security-events: write
+    steps:
+      - name: check out the code
+        uses: actions/checkout@v3
+      
+      - name: list directory contents
+        run: ls -lart
+        
+      - uses: actions/upload-artifact@master
+        with:
+          name: preperation-artifact
+          path: .
+        
+ codeQualityCheck:
+    needs : preparation
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -29,8 +48,11 @@ jobs:
       matrix:
         language: [ 'javascript' ]
     steps:
-     - name: check out the code
-       uses: actions/checkout@v3
+     - name: download artifacts
+       uses: actions/download-artifact@master
+       with:
+         name: my-artifact
+         path: .
        
      - name: configure node.js for compiling
        uses: actions/setup-node@v1
