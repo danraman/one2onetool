@@ -13,9 +13,6 @@ env:
   ECS_CLUSTER: assignment-cluster             
   ECS_TASK_DEFINITION: assignment-task.json                                           
   CONTAINER_NAME: assignment-container         
-  ECR_REGISTRY: ""
-  IMAGE_TAG: ""
-
 
 permissions:
   contents: read
@@ -167,7 +164,7 @@ jobs:
        uses: alexjurkiewicz/ecr-scan-image@v1.7.0
        with:
          repository: $ECR_REGISTRY/$ECR_REPOSITORY
-         tag: $IMAGE_TAG
+         tag: "one2oneapp-latest"
          
      - name: total number of vulnerabilities 
        run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
