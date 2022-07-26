@@ -4,7 +4,7 @@ Release branch has environment variable "DATA_FILE" and staging branch does not 
 email will be sent out after the job completion with the status. 
 codeql has been used for verifying the quality of the code after which the build will start.
 
-we have added files "Dockerfile" -- for docker build of nodejs image , 
+I have added files "Dockerfile" -- for docker build of nodejs image , 
                     "assignment-task.json" --- for task definition and container definition to be used in AWS ECS.
                     ".foreverignore" --- for using forever to start the service in cmd of docker. 
                     
