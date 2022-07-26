@@ -192,6 +192,7 @@ jobs:
         docker pull $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest"
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest" $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --region us-east-1
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
      - name: Send mail
@@ -212,10 +213,6 @@ jobs:
    needs: release
    runs-on: ubuntu-latest
    steps:
-     - name: Login to Amazon ECR
-       id: login-ecr
-       uses: aws-actions/amazon-ecr-login@v1
-       
      - name: Configure AWS credentials
        uses: aws-actions/configure-aws-credentials@v1
        with:
@@ -223,6 +220,10 @@ jobs:
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ env.AWS_REGION }}
 
+     - name: Login to Amazon ECR
+       id: login-ecr
+       uses: aws-actions/amazon-ecr-login@v1
+       
      - name: Fill in the new image ID in the Amazon ECS task definition
        id: task-def
        uses: aws-actions/amazon-ecs-render-task-definition@v1
