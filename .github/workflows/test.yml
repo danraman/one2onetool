@@ -1,7 +1,6 @@
 name: test
 on:
  workflow_dispatch: {}
- 
 jobs:
   version_job:
     name: Create version number
