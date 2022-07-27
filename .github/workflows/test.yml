@@ -2,17 +2,17 @@ name: test
 on:
  workflow_dispatch: {}
 jobs:
-  retag-image:
+  release:
     name: Create version number
     runs-on: ubuntu-latest
     outputs:
-      image: ${{ steps.version_step.outputs.image }}
+      image: ${{ steps.retag-image.outputs.image }}
     steps:
-    - id: version_step
+    - id: retag-image
       run: echo "::set-output name=image::1.2.3"
   output:
    name: Output
    runs-on: ubuntu-latest
-   needs: retag-image
+   needs: release
    steps:
-    - run: echo "${{ needs.retag-image.outputs.image }}"
+    - run: echo "${{ needs.release.outputs.image }}"
