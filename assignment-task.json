@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/assignment-task-release",
+          "awslogs-group": "/ecs/assignment-task",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -68,7 +68,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "assignment-container-release"
+      "name": "assignment-container"
     }
   ],
   "placementConstraints": [],
@@ -78,8 +78,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task-release:1",
-  "family": "assignment-task-release",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task:1",
+  "family": "assignment-task",
   "requiresAttributes": [
     {
       "targetId": null,
