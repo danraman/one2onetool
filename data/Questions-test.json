@@ -1,5 +1,6 @@
 {
     "prompts": [
+        "Hi... this is from staging branch"
         "Hey there, manager! This is just a test:",
         "Yo, this is just some test data, nothing to see here:"
     ],
