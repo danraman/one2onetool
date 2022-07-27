@@ -27,7 +27,8 @@
         }
       ],
       "command": [
-        "npm run start"],
+        "npm run start"
+      ],
       "linuxParameters": null,
       "cpu": 256,
       "environment": [
@@ -57,7 +58,7 @@
         "retries": 3,
         "command": [
           "CMD-SHELL",
-          "curl -f http://localhost:3000/||exit 1"
+          "echo 'pod is healthy'"
         ],
         "timeout": 60,
         "interval": 120,
