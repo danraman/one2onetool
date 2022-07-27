@@ -73,7 +73,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "assignment-container-master"
+      "name": "assignment-container"
     }
   ],
   "placementConstraints": [],
