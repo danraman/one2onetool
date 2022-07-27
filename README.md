@@ -19,3 +19,15 @@ in AWS :
  we have enabled VPC (subnet) to assign dynamic public ipv4 addresses. 
  
 after triggering the work flow from github actions, deployment completed successfully and services tested with loadbalancer dns and port number 3000. 
+
+
+Note:-
+
+I have created this Project in AWS with my login credential and I have verified the codes with my internal team, as team suggested to create 2 load balancer 
+because to code update in staging/release branch which should not overwrite the existing branch, I have created ECS cluster as advised but due to time constraint
+unable to fix the issue in load balancer level. I hope single load balancer work fine for this assessment 
+
+Load Balancer link mentioned below:-
+
+http://ec2co-ecsel-10qmswv4b14xi-682940483.us-east-1.elb.amazonaws.com:3000/
+
