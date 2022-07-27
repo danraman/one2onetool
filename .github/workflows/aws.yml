@@ -71,13 +71,7 @@ jobs:
       fail-fast: false      
       matrix:
         language: [ 'javascript' ]
-    steps:
-     - name: download artifacts
-       uses: actions/download-artifact@master
-       with:
-         name: pre_build-artifact
-         path: .      
-         
+    steps:     
      - name: check out the code
        uses: actions/checkout@v3
         
@@ -107,11 +101,6 @@ jobs:
    needs: test
    runs-on: ubuntu-latest
    steps:
-     - name: download artifacts
-       uses: actions/download-artifact@master
-       with:
-         name: pre_build-artifact
-         path: .      
      - name: check out the code
        uses: actions/checkout@v3
         
@@ -166,12 +155,6 @@ jobs:
    needs: build
    runs-on: ubuntu-latest
    steps:
-     - name: download artifacts
-       uses: actions/download-artifact@master
-       with:
-         name: pre_build-artifact
-         path: .      
-         
      - name: check out the code
        uses: actions/checkout@v3
         
