@@ -207,6 +207,9 @@ jobs:
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: get.draman@gmail.com
          from: Git hub actions
+         
+     - name: print environment variable
+       run: echo ${{ steps.retag-image.outputs.image }}
 
  staging_deploy:
    needs: release
