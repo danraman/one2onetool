@@ -57,7 +57,7 @@
         "retries": 3,
         "command": [
           "CMD-SHELL",
-          "curl -k http://localhost:3000/||exit 0"
+          "curl -k http://localhost:3000/||exit 1"
         ],
         "timeout": 60,
         "interval": 120,
