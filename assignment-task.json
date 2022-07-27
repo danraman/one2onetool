@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/assignment-task",
+          "awslogs-group": "/ecs/assignment-task-release",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -27,8 +27,7 @@
         }
       ],
       "command": [
-        "npm",
-        "run start"
+        "npm run start"
       ],
       "linuxParameters": null,
       "cpu": 256,
