@@ -26,7 +26,8 @@
           "containerPort": 3000
         }
       ],
-      "command": [],
+      "command": [
+        "npm run start"],
       "linuxParameters": null,
       "cpu": 256,
       "environment": [
