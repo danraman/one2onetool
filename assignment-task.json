@@ -70,7 +70,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "assignment-container-staging"
+      "name": "assignment-container"
     }
   ],
   "placementConstraints": [],
