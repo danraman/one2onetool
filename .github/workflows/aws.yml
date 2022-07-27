@@ -30,7 +30,7 @@ jobs:
         
       - uses: actions/upload-artifact@master
         with:
-          name: preperation-artifact
+          name: pre_build-artifact
           path: .
 
       - name: Configure AWS credentials
@@ -75,7 +75,7 @@ jobs:
      - name: download artifacts
        uses: actions/download-artifact@master
        with:
-         name: preperation-artifact
+         name: pre_build-artifact
          path: .      
          
      - name: Initialize CodeQL
@@ -100,21 +100,21 @@ jobs:
          to: get.draman@gmail.com
          from: Git hub actions
  
- Build_Deploy:
+ build:
    needs: test
    runs-on: ubuntu-latest
    steps:
-     - name: check out the code              
-       uses: actions/checkout@v3
+     - name: download artifacts
+       uses: actions/download-artifact@master
+       with:
+         name: pre_build-artifact
+         path: .      
        
      - name: configure node.js for compiling
        uses: actions/setup-node@v1
        with:
          node-version:  16.x                   
-         
-     - name: list the directory contents        
-       run: ls -lart
-       
+              
      - name: Install dependencies               
        run: npm ci
        
@@ -136,21 +136,103 @@ jobs:
        id: build-image
        env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-         IMAGE_TAG: "master-one2oneapp-${{ github.sha }}"
+         IMAGE_TAG: "one2oneapp-latest"
        run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+		
+     - name: Send mail
+       if: failure()
+       uses: dawidd6/action-send-mail@v3
+       with:
+         server_address: smtp.mail.yahoo.com
+         server_port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: Docker build has issues in release branch of ${{ github.repository }} --  ${{job.status}}
+         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
+         to: get.draman@gmail.com
+         from: Git hub actions
+
+ release:
+   needs: build
+   runs-on: ubuntu-latest
+   outputs:
+		image: ${{ steps.retag-image.outputs.image }}
+   steps:
+      - name: Configure AWS credentials
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ${{ env.AWS_REGION }}
+
+     - name: Login to Amazon ECR
+       id: login-ecr
+       uses: aws-actions/amazon-ecr-login@v1
+     
+     - name: Scan Docker image
+       id: docker-scan
+       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag="one2oneapp-latest" --region us-east-1
+         
+     - name: total number of vulnerabilities 
+       run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
+
+     - name: retag and push image to Amazon ECR with final image id. Final image id 
+       id: retag-image
+       env:
+         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+         IMAGE_TAG: "release-one2oneapp-${{ github.sha }}"
+       run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker pull $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest"
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest" $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+     - name: Send mail
+       if: failure()
+       uses: dawidd6/action-send-mail@v3
+       with:
+         server_address: smtp.mail.yahoo.com
+         server_port: 465
+         username: ${{secrets.MAIL_USERNAME}}
+         password: ${{secrets.MAIL_PASSWORD}}
+         subject: Image scan has failed in release stage for release branch ${{ github.repository }} --  ${{job.status}}
+         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
+         to: get.draman@gmail.com
+         from: Git hub actions
+		 
+ staging_deploy:
+   needs: release
+   runs-on: ubuntu-latest
+   steps:
+     - name: Configure AWS credentials
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ${{ env.AWS_REGION }}
+
+     - name: Login to Amazon ECR
+       id: login-ecr
+       uses: aws-actions/amazon-ecr-login@v1
+       
+	 - name: print the image
+	   run : echo "${{needs.release.outputs.image}}"
+	   
      - name: Fill in the new image ID in the Amazon ECS task definition
        id: task-def
        uses: aws-actions/amazon-ecs-render-task-definition@v1
        with:
          task-definition: ${{ env.ECS_TASK_DEFINITION }}
          container-name: ${{ env.CONTAINER_NAME }}
-         image: ${{ steps.build-image.outputs.image }}
+         image: ${{needs.release.outputs.image}} 
  
      - name: Deploy Amazon ECS task definition
        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -159,6 +241,7 @@ jobs:
          service: ${{ env.ECS_SERVICE }}
          cluster: ${{ env.ECS_CLUSTER }}
          wait-for-service-stability: true
+
      - name: Send mail
        if: always()
        uses: dawidd6/action-send-mail@v3
@@ -167,7 +250,7 @@ jobs:
          server_port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
-         subject: Workflow completed for ${{ github.repository }} --  ${{job.status}}
+         subject: Workflow completed in release branch ${{ github.repository }} -- job status is  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: get.draman@gmail.com
          from: Git hub actions
