@@ -160,8 +160,6 @@ jobs:
  release_staging_deploy:
    needs: build
    runs-on: ubuntu-latest
-   outputs:
-      image: ${{ steps.retag-image.outputs.image }}
    steps:
      - name: Configure AWS credentials
        uses: aws-actions/configure-aws-credentials@v1
