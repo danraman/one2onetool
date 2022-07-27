@@ -9,10 +9,10 @@ on:
 env:
   AWS_REGION: us-east-1                        
   ECR_REPOSITORY: assignment21jul             
-  ECS_SERVICE: assignment-service-release
+  ECS_SERVICE: assignment-service
   ECS_CLUSTER: assignment-cluster
   ECS_TASK_DEFINITION: assignment-task.json                                           
-  CONTAINER_NAME: assignment-container-release
+  CONTAINER_NAME: assignment-container
 
 permissions:
   contents: read
