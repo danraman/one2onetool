@@ -157,7 +157,7 @@ jobs:
          to: get.draman@gmail.com
          from: Git hub actions
 
- release:
+ release_staging_deploy:
    needs: build
    runs-on: ubuntu-latest
    outputs:
@@ -195,47 +195,13 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-     - name: Send mail
-       if: failure()
-       uses: dawidd6/action-send-mail@v3
-       with:
-         server_address: smtp.mail.yahoo.com
-         server_port: 465
-         username: ${{secrets.MAIL_USERNAME}}
-         password: ${{secrets.MAIL_PASSWORD}}
-         subject: Image scan has failed in release stage for release branch ${{ github.repository }} --  ${{job.status}}
-         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
-         to: get.draman@gmail.com
-         from: Git hub actions
-         
-     - name: print environment variable
-       run: echo ${{ steps.retag-image.outputs.image }}
-
- staging_deploy:
-   needs: release
-   runs-on: ubuntu-latest
-   steps:
-     - name: Configure AWS credentials
-       uses: aws-actions/configure-aws-credentials@v1
-       with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: ${{ env.AWS_REGION }}
-
-     - name: Login to Amazon ECR
-       id: login-ecr
-       uses: aws-actions/amazon-ecr-login@v1
-       
-     - name: print the image
-       run : echo "${{needs.release.outputs.image}}"
-
      - name: Fill in the new image ID in the Amazon ECS task definition
        id: task-def
        uses: aws-actions/amazon-ecs-render-task-definition@v1
        with:
          task-definition: ${{ env.ECS_TASK_DEFINITION }}
          container-name: ${{ env.CONTAINER_NAME }}
-         image: ${{needs.release.outputs.image}} 
+         image: ${{ steps.retag-image.outputs.image }} 
  
      - name: Deploy Amazon ECS task definition
        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
