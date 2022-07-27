@@ -161,6 +161,12 @@ jobs:
    needs: build
    runs-on: ubuntu-latest
    steps:
+     - name: download artifacts
+       uses: actions/download-artifact@master
+       with:
+         name: pre_build-artifact
+         path: .      
+         
      - name: Configure AWS credentials
        uses: aws-actions/configure-aws-credentials@v1
        with:
