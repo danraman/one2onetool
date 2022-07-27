@@ -84,8 +84,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task:75",
-  "family": "assignment-task",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task-release:75",
+  "family": "assignment-task-release",
   "requiresAttributes": [
     {
       "targetId": null,
