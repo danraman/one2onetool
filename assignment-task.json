@@ -32,12 +32,7 @@
       ],
       "linuxParameters": null,
       "cpu": 256,
-      "environment": [
-               {
-                    "name": "DATA_FILE",
-                    "value": "Questions-test.json"
-                }
-         ],
+      "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
@@ -75,7 +70,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "assignment-container-master"
+      "name": "assignment-container-staging"
     }
   ],
   "placementConstraints": [],
