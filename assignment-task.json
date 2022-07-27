@@ -26,10 +26,7 @@
           "containerPort": 3000
         }
       ],
-      "command": [
-        "npm",
-        "run start"
-      ],
+      "command": [],
       "linuxParameters": null,
       "cpu": 256,
       "environment": [
@@ -57,10 +54,7 @@
       "interactive": null,
       "healthCheck": {
         "retries": 3,
-        "command": [
-          "CMD-SHELL",
-          "curl -f http://localhost:3000/||exit 1"
-        ],
+        "command": [],
         "timeout": 60,
         "interval": 120,
         "startPeriod": null
