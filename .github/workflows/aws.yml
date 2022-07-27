@@ -11,7 +11,7 @@ env:
   ECR_REPOSITORY: assignment21jul             
   ECS_SERVICE: assignment-service
   ECS_CLUSTER: assignment-cluster
-  ECS_TASK_DEFINITION: assignment-task.json                                           
+  ECS_TASK_DEFINITION: assignment-task-release.json                                           
   CONTAINER_NAME: assignment-container-release
 
 permissions:
