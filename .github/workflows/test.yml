@@ -13,6 +13,6 @@ jobs:
   output:
    name: Output
    runs-on: ubuntu-latest
-   needs: version_job
+   needs: retag-image
    steps:
     - run: echo "${{ needs.retag-image.outputs.image }}"
