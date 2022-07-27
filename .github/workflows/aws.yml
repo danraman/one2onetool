@@ -158,7 +158,7 @@ jobs:
          from: Git hub actions
      
 
- release:
+ Deploy:
    needs: build
    runs-on: ubuntu-latest
    outputs:
@@ -195,35 +195,12 @@ jobs:
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:"one2oneapp-latest" $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-     - name: Send mail
-       if: failure()
-       uses: dawidd6/action-send-mail@v3
-       with:
-         server_address: smtp.mail.yahoo.com
-         server_port: 465
-         username: ${{secrets.MAIL_USERNAME}}
-         password: ${{secrets.MAIL_PASSWORD}}
-         subject: Image scan has failed in release stage for release branch ${{ github.repository }} --  ${{job.status}}
-         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
-         to: get.draman@gmail.com
-         from: Git hub actions
-
-       
- staging_deploy:
-   needs: release
-   runs-on: ubuntu-latest
-   steps:
      - name: Configure AWS credentials
        uses: aws-actions/configure-aws-credentials@v1
        with:
          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ env.AWS_REGION }}
-
-     - name: Login to Amazon ECR
-       id: login-ecr
-       uses: aws-actions/amazon-ecr-login@v1
        
      - name: Fill in the new image ID in the Amazon ECS task definition
        id: task-def
@@ -242,14 +219,16 @@ jobs:
          wait-for-service-stability: true
 
      - name: Send mail
-       if: always()
+       if: failure()
        uses: dawidd6/action-send-mail@v3
        with:
          server_address: smtp.mail.yahoo.com
          server_port: 465
          username: ${{secrets.MAIL_USERNAME}}
          password: ${{secrets.MAIL_PASSWORD}}
-         subject: Workflow completed in release branch ${{ github.repository }} -- job status is  ${{job.status}}
+         subject: Image scan has failed in release stage for release branch ${{ github.repository }} --  ${{job.status}}
          body: "Job completed ${{job.status}} ${{ toJson(job) }}"
          to: get.draman@gmail.com
          from: Git hub actions
+
+      
