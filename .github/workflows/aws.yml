@@ -9,10 +9,10 @@ on:
 env:
   AWS_REGION: us-east-1                        
   ECR_REPOSITORY: assignment21jul             
-  ECS_SERVICE: assignment-service-staging
-  ECS_CLUSTER: assignment-cluster-staging
+  ECS_SERVICE: assignment-service
+  ECS_CLUSTER: assignment-cluster
   ECS_TASK_DEFINITION: assignment-task.json                                           
-  CONTAINER_NAME: assignment-container-staging
+  CONTAINER_NAME: assignment-container
 
 permissions:
   contents: read
@@ -28,11 +28,6 @@ jobs:
       - name: list directory contents
         run: ls -lart
         
-      - uses: actions/upload-artifact@master
-        with:
-          name: pre_build-artifact
-          path: .
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -72,11 +67,8 @@ jobs:
       matrix:
         language: [ 'javascript' ]
     steps:
-     - name: download artifacts
-       uses: actions/download-artifact@master
-       with:
-         name: pre_build-artifact
-         path: .      
+     - name: check out the code
+       uses: actions/checkout@v3
          
      - name: Initialize CodeQL
        uses: github/codeql-action/init@v2
@@ -104,11 +96,8 @@ jobs:
    needs: test
    runs-on: ubuntu-latest
    steps:
-     - name: download artifacts
-       uses: actions/download-artifact@master
-       with:
-         name: pre_build-artifact
-         path: .      
+     - name: check out the code
+       uses: actions/checkout@v3
        
      - name: configure node.js for compiling
        uses: actions/setup-node@v1
@@ -161,11 +150,8 @@ jobs:
    needs: build
    runs-on: ubuntu-latest
    steps:
-     - name: download artifacts
-       uses: actions/download-artifact@master
-       with:
-         name: pre_build-artifact
-         path: .      
+     - name: check out the code
+       uses: actions/checkout@v3  
          
      - name: Configure AWS credentials
        uses: aws-actions/configure-aws-credentials@v1
