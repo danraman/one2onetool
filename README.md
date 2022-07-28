@@ -31,7 +31,7 @@ after triggering the work flow from github actions, deployment completed success
 Note:-
 
 I have created this Project in AWS with my login credential and I have verified the deployment flow with my internal team, As team suggested to create 2 load balancer 
-because if you do code change in staging/release branch  the job will trigger automatically  with not overwrite the existing branch.
+because if you do any code change in staging/release branch  the job will trigger automatically as per assigment but job should not overwrite the existing job.
 
 I have tried to create one more  ECS cluster & load balancer but no luck and stuck with some issue in AWS level and unable to proceed due to time constraint
 I hope single load balancer work fine for this assessment but it take more time to trigger the output
