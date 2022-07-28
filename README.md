@@ -15,10 +15,15 @@ image tag is changed to have "master-one2oneapp" in master branch, stage-one2one
 
 in AWS :
  I have created an ecs repository with name "assignment21jul".
+ 
  I have created an ecs cluster with name "assignment-cluster".
- I have added a service within the cluster with name "assignment-service"
+ 
+ I have added a service within the cluster with name "assignment-service".
+ 
  I have added vpc network with host network enabled on port 3000.
+ 
  I have created sample container template with name "assignment-container".
+ 
  I have enabled VPC (subnet) to assign dynamic public ipv4 addresses. 
  
 after triggering the work flow from github actions, deployment completed successfully and services tested with loadbalancer dns and port number 3000. 
