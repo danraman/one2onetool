@@ -30,9 +30,11 @@ after triggering the work flow from github actions, deployment completed success
 
 Note:-
 
-I have created this Project in AWS with my login credential and I have verified the codes with my internal team, as team suggested to create 2 load balancer 
-because to code update in staging/release branch which should not overwrite the existing branch, I have created ECS cluster as advised but due to time constraint
-unable to fix the issue in load balancer level. I hope single load balancer work fine for this assessment 
+I have created this Project in AWS with my login credential and I have verified the codes with my internal team, As team suggested to create 2 load balancer 
+because if you do code update's in staging/release branch  the job will automatically which should not overwrite the existing branch.
+
+I have tried to create one more  ECS cluster & load balancer no luck stuck with some issue in AWS level and unable to proceed due to time constraint
+I hope single load balancer work fine for this assessment 
 
 Please follow the step to run github-action-workflow
 
@@ -53,6 +55,8 @@ Please follow the step to run github-action-workflow
 5) Double click  data_flow running job and you see the stages of the deployment. Plese monitor the stages.
 
 Note:- 
+
+Yesterday I have tried to create 2 loadbalancer as per the project requirement and i had some issue due to this job will run bit long in " Deploy Amazon ECS tast Definition" stage, Pls adjust.
 
    LoadBalancer Url to view the deployment status:-
    
