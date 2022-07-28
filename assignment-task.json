@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/assignment-task-release",
+          "awslogs-group": "/ecs/assignment-task",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -84,8 +84,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task-release:75",
-  "family": "assignment-task-release",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:061268931248:task-definition/assignment-task:75",
+  "family": "assignment-task",
   "requiresAttributes": [
     {
       "targetId": null,
