@@ -1,3 +1,6 @@
+Release
+
+
 name: data_file
 on:
  workflow_dispatch: {}
@@ -168,13 +171,6 @@ jobs:
      - name: Login to Amazon ECR
        id: login-ecr
        uses: aws-actions/amazon-ecr-login@v1
-     
-     - name: Scan Docker image
-       id: docker-scan
-       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag="one2oneapp-latest" --region us-east-1
-         
-     - name: total number of vulnerabilities 
-       run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
 
      - name: retag and push image to Amazon ECR with final image id. Final image id 
        id: retag-image
