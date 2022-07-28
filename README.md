@@ -14,12 +14,12 @@ I have added files "Dockerfile" -- for docker build of nodejs image ,
 image tag is changed to have "master-one2oneapp" in master branch, stage-one2oneapp in staging branch and release-one2oneapp in release branch.
 
 in AWS :
- we have created an ecs repository with name "assignment21jul".
- we have created an ecs cluster with name "assignment-cluster".
- we have added a service within the cluster with name "assignment-service"
- we have added vpc network with host network enabled on port 3000.
- we have created sample container template with name "assignment-container".
- we have enabled VPC (subnet) to assign dynamic public ipv4 addresses. 
+ I have created an ecs repository with name "assignment21jul".
+ I have created an ecs cluster with name "assignment-cluster".
+ I have added a service within the cluster with name "assignment-service"
+ I have added vpc network with host network enabled on port 3000.
+ I have created sample container template with name "assignment-container".
+ I have enabled VPC (subnet) to assign dynamic public ipv4 addresses. 
  
 after triggering the work flow from github actions, deployment completed successfully and services tested with loadbalancer dns and port number 3000. 
 
