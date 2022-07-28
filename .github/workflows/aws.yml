@@ -132,44 +132,6 @@ jobs:
         # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        
-     - name: Send mail
-       if: failure()
-       uses: dawidd6/action-send-mail@v3
-       with:
-         server_address: smtp.mail.yahoo.com
-         server_port: 465
-         username: ${{secrets.MAIL_USERNAME}}
-         password: ${{secrets.MAIL_PASSWORD}}
-         subject: Docker build has issues in release branch of ${{ github.repository }} --  ${{job.status}}
-         body: "Job completed ${{job.status}} ${{ toJson(job) }}"
-         to: get.draman@gmail.com
-         from: Git hub actions
-
- release_staging_deploy:
-   needs: build
-   runs-on: ubuntu-latest
-   steps:
-     - name: check out the code
-       uses: actions/checkout@v3
-         
-     - name: Configure AWS credentials
-       uses: aws-actions/configure-aws-credentials@v1
-       with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: ${{ env.AWS_REGION }}
-
-     - name: Login to Amazon ECR
-       id: login-ecr
-       uses: aws-actions/amazon-ecr-login@v1
-     
-     - name: Scan Docker image
-       id: docker-scan
-       run: aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag="one2oneapp-latest" --region us-east-1
-         
-     - name: total number of vulnerabilities 
-       run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities."
 
      - name: retag and push image to Amazon ECR with final image id. Final image id 
        id: retag-image
