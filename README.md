@@ -41,7 +41,7 @@ Please follow the below steps to run github-action-workflow:p
 1) Use below login credential to login the repository 
 
    github.com/danraman/one2onetool   
-     get.draman@gmail.com / Passw0rd@12345
+     get.draman@gmail.com / Assessment@2022
 	 
   Next:- Go to the main page --> go to the "<>Code"   and select the branch below ,, which branch you need to execute the code..
   
