@@ -56,7 +56,7 @@ Please follow the below steps to run github-action-workflow:p
 
 Note:- 
 
-Yesterday I was tried to create 2 loadbalancer as per the project requirement and i had issue, Due to this job will run bit long in " Deploy Amazon ECS tast Definition" stage, Pls adjust.
+Yesterday I was tried to create 2 loadbalancer as per the our team requirement and i had issue, Due to this job will run bit long in " Deploy Amazon ECS task Definition" stage and some time it get fails too, bocause of loadbalancer issue.
 
    LoadBalancer Url to view the deployment status:-
    
